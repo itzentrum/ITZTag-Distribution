@@ -1,0 +1,9 @@
+html body.claro div#editor1.dijitEditor div.dijitEditorIFrameContainer iframe#editor1_iframe.dijitEditorIFrame html body div#dijitEditorBody wort {
+  background-color: #0000AA;
+}
+#document wort {
+  background-color: #0000AA;
+}
+html body#dijitEditorBody wort {
+  background-color: #0000AA;
+}

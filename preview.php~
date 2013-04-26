@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<?php
+include_once "mysql_config.php";
+mysql_connect('localhost',$mysql_user,$mysql_pass);
+mysql_select_db('itztag');
+$qresult=mysql_query('SELECT * FROM sessions WHERE Name="'.$_REQUEST["name"].'";');
+$result=mysql_fetch_array($qresult, MYSQL_ASSOC);
+$tagresult=mysql_query("SELECT Tag, Farbe FROM tags WHERE SessionID=".$_SESSION["id"].";");
+$tagplugins="";
+$count=0;
+while ($t=mysql_fetch_array($tagresult))
+  {
+    $tagplugins=$tagplugins."{name: 'itztag', label: '".$t["Tag"]."', color: '".$colors[$t["Farbe"]]."', number: $count}, ";
+    $count++;
+    echo "$count\n";
+  }
+//var_dump($result);
+echo "<link rel=\"stylesheet\" href=\"css/".$result["Name"].".css\" >";
+echo "<title>Projekt: ".$result["Name"]."</title>";
+?>
+
+</head>
+<body>
+<table>
+<tr>
+<td>
+<table id="balken" cellspacing="0" cellpadding="0" width="15" border="1" rules="none" frame="box">
+  </table>
+</td>
+<td id="data" width="90%">
+ <?php
+echo $result["Data"];
+?>
+</td>
+</tr>
+</table>
+<script type="text/javascript" src="balkengrafik.js">
+balken(document.getElementById('data'),document.getElementById('balken'),<?php echo "[".rtrim($tagplugins,", ")."]"; ?>);
+</script>
+</body>
+</html>
